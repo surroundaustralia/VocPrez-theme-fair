@@ -1,0 +1,11 @@
+# JetBrains
+.idea/
+
+# Mac
+.DS_Store
+
+# config
+_config/
+
+# variables
+.ENV
