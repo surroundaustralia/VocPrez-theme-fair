@@ -144,6 +144,9 @@ class FairVocabularyRenderer(VocabularyRenderer):
         g.bind("loci", LOCI)
         g.add((f, LOCI.hadGenerationMethod, method))
 
+        # derived from
+        g.add((f, PROV.wasDerivedFrom, URIRef(self.vocab.uri + "?_profile=dcat")))
+
 
         # serialise in other RDF format
         if self.mediatype in ["application/rdf+json", "application/json"]:

@@ -1,9 +1,7 @@
 # VocPrez FAIR Score theme
 A VocPrez UI theme for demonstrating a FAIR score calculator.
 
-This demonstration theme uses vocabularies from Geoscience Australia (GA) for demonstration. To see GA's vocabularies at their authoritative publication point, go to:
-
-* <http://vocabs.ga.gov.au/>
+This repository contains stylistic and content elements that are overlaid onto an instance of [VocPrez](https://github.com/RDFlib/VocPrez), the Python SKOS Vocabulary publication tool, to enable demonstration scores of [FAIR Principles](https://ardc.edu.au/resources/working-with-data/fair-data/). Items delivered by VocPrez - vocabularies - then have a new _profile_ or _view_ of them that communicates a FAIR score made up of values for F, A, I & R as well as an indication of the method that was used to genetate the scores.
 
 ## Use
 `apply.sh` adds these elements - templates, style files and extra API endpoints - to a VocPrez instance
