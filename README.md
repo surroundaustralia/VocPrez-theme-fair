@@ -1,4 +1,4 @@
-# VocPrez-theme-ga
+# VocPrez FAIR Score theme
 A VocPrez UI theme for demonstrating a FAIR score calculator.
 
 This demonstration theme uses vocabularies from Geoscience Australia (GA) for demonstration. To see GA's vocabularies at their authoritative publication point, go to:
