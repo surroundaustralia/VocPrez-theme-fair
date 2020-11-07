@@ -2,27 +2,24 @@ from vocprez import __version__
 from pyldapi import Renderer
 from flask import Response, render_template
 from rdflib import Graph, URIRef, Literal, XSD, RDF
-from rdflib.namespace import DCTERMS, OWL, SKOS, Namespace, NamespaceManager
-from vocprez.model.profiles import profile_dcat, profile_dd, profile_nvs, profile_skos
-import json as j
-from vocprez.model.vocabulary import Vocabulary, VocabularyRenderer
-import logging
-import requests
+from rdflib.namespace import DCTERMS, OWL, SKOS, Namespace
+from vocprez.model.profiles import profile_dcat, profile_dd, profile_skos, profile_fair
+from vocprez.model.vocabulary import VocabularyRenderer
 
 
-class NvsVocabularyRenderer(VocabularyRenderer):
+class FairVocabularyRenderer(VocabularyRenderer):
     def __init__(self, request, vocab, language="en"):
         self.profiles = {
-            "nvs": profile_nvs,
             "dcat": profile_dcat,
             "skos": profile_skos,
-            "dd": profile_dd
+            "dd": profile_dd,
+            "fair": profile_fair,
         }
         self.vocab = vocab
         self.uri = self.vocab.uri
         self.language = language
 
-        super(VocabularyRenderer, self).__init__(request, vocab.uri, self.profiles, "fair")
+        super(VocabularyRenderer, self).__init__(request, vocab.uri, self.profiles, "skos")
 
     def render(self):
         # try returning alt profile
@@ -46,13 +43,14 @@ class NvsVocabularyRenderer(VocabularyRenderer):
                     self.mediatype in Renderer.RDF_MEDIA_TYPES
                     or self.mediatype in Renderer.RDF_SERIALIZER_TYPES_MAP
             ):
-                return self._render_nvs_rdf()
+                return self._render_fair_rdf()
             else:
-                return self._render_nvs_html()
+                return self._render_fair_html()
 
-    def _render_nvs_rdf(self):
+    def _render_fair_rdf(self):
         # make a dummy graph
         g = Graph()
+        g.bind("skos", SKOS)
         FAIR = Namespace("https://w3id.org/profile/fair")
         g.bind("fair", FAIR)
         v = URIRef(self.vocab.uri)
@@ -81,7 +79,7 @@ class NvsVocabularyRenderer(VocabularyRenderer):
             headers=self.headers,
         )
 
-    def _render_nvs_html(self):
+    def _render_fair_html(self):
         _template_context = {
             "version": __version__,
             "uri": self.uri,
